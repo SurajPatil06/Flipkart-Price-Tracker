@@ -11,17 +11,20 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
 response = requests.get(url, headers=headers)
 
 soup = BeautifulSoup(response.text, 'html.parser')
-prize = soup.find_all("div", class_="hZ3P6w bnqy13")[0].text
-prize_int = int(prize.replace("₹", "").replace(",", ""))
+price = soup.find_all("div", class_="hZ3P6w bnqy13")[0].text
+price_int = int(price.replace("₹", "").replace(",", ""))
 
 # Storing time
 now_date = datetime.now()
 date = now_date.strftime("%x")
 
 # Storing in csv
-data = [date, prize_int]
+data = [date, price_int]
 file_path = "data.csv"
 
 with open(file_path, mode="a", newline="") as file:
     writer = csv.writer(file)
     writer.writerow(data)
+
+print("Successful!!")
+print(date, price)
